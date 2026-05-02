@@ -1,0 +1,20 @@
+{
+  "name": "ci-cd-node-docker",
+  "version": "1.0.0",
+  "description": "Minimal Node.js CI/CD demo with GitHub Actions and Docker",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest --verbose"
+  },
+  "keywords": ["ci-cd", "docker", "github-actions", "node", "express"],
+  "author": "Suraj Gunagi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.1.0"
+  }
+}
