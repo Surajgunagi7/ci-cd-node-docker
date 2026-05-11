@@ -1,6 +1,6 @@
-# CI/CD Pipeline Demo — Node.js + Docker + GitHub Actions
+# Task Manager API — CI/CD Pipeline Demo
 
-A production-quality project demonstrating a **multi-stage CI/CD pipeline** using **Node.js (Express)**, **Docker**, and **GitHub Actions** — with static analysis, code coverage, security scanning, and code quality gates.
+A **Task Manager REST API** built with Node.js (Express) demonstrating a **multi-stage CI/CD pipeline** using **GitHub Actions**, **Docker**, **ESLint**, **SonarCloud**, and **code coverage** — with 20 automated tests.
 
 ---
 
@@ -11,8 +11,8 @@ ci-cd-node-docker/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml              # Multi-stage GitHub Actions pipeline
-├── app.js                      # Express REST API server
-├── app.test.js                 # Jest + Supertest API tests
+├── app.js                      # Task Manager REST API (in-memory)
+├── app.test.js                 # 20 API tests (Jest + Supertest)
 ├── .eslintrc.json              # ESLint static analysis config
 ├── sonar-project.properties    # SonarCloud code quality config
 ├── Dockerfile                  # Multi-stage Docker build
@@ -36,8 +36,8 @@ npm start          # → http://localhost:3000
 ### Run Tests
 
 ```bash
-npm test                # Run tests
-npm run test:coverage   # Run tests + generate coverage report
+npm test                # Run 20 tests
+npm run test:coverage   # Run tests + generate coverage report (95%+ coverage)
 ```
 
 ### Lint Code
@@ -57,10 +57,37 @@ docker run -p 3000:3000 ci-cd-node-docker
 
 ## 🔌 API Endpoints
 
-| Method | Path      | Response                        |
-| ------ | --------- | ------------------------------- |
-| GET    | `/`       | `CI/CD Pipeline Running`        |
-| GET    | `/health` | `{ "status": "ok" }`           |
+| Method   | Path            | Description                          |
+| -------- | --------------- | ------------------------------------ |
+| `GET`    | `/`             | API info & available endpoints       |
+| `GET`    | `/health`       | Health check with uptime             |
+| `GET`    | `/tasks`        | List all tasks (filter: `?status=`)  |
+| `GET`    | `/tasks/:id`    | Get a single task                    |
+| `POST`   | `/tasks`        | Create a task                        |
+| `PUT`    | `/tasks/:id`    | Update a task                        |
+| `DELETE` | `/tasks/:id`    | Delete a task                        |
+| `GET`    | `/tasks/stats`  | Task statistics & completion rate    |
+| `POST`   | `/reset`        | Clear all tasks (for testing)        |
+
+### Example Usage
+
+```bash
+# Create a task
+curl -X POST http://localhost:3000/tasks \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Setup CI/CD", "description": "Configure GitHub Actions"}'
+
+# List all tasks
+curl http://localhost:3000/tasks
+
+# Mark as done
+curl -X PUT http://localhost:3000/tasks/1 \
+  -H "Content-Type: application/json" \
+  -d '{"status": "done"}'
+
+# Get stats
+curl http://localhost:3000/tasks/stats
+```
 
 ---
 
