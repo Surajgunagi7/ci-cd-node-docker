@@ -6,3 +6,6 @@ npm-debug.log
 Dockerfile
 *.md
 app.test.js
+coverage
+.eslintrc.json
+sonar-project.properties

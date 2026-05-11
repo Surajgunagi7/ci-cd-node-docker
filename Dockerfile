@@ -1,10 +1,10 @@
 # ─────────────────────────────────────────────
 #  Multi-stage Docker build for Node.js app
-#  Base image: node:18-alpine (minimal footprint)
+#  Base image: node:20-alpine (minimal footprint)
 # ─────────────────────────────────────────────
 
 # ── Stage 1: Install dependencies ────────────
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -15,7 +15,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 # ── Stage 2: Production image ────────────────
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
